@@ -7,10 +7,10 @@ with tensorflow serving api
 
 structure for the files and code :
 
-checkpoints -> model checkpoints while training 
-data -> both processed and raw
-deployment -> tensorflow serving api 
-model-export -> saved model 
-notebook-> Data exploration and working protoype (training the model with tf pipeline)
-src-> source code
-summary-> model summary while training and validation on test set 
+#### checkpoints -> model checkpoints while training 
+#### data -> both processed and raw
+#### deployment -> tensorflow serving api 
+#### model-export -> saved model 
+#### notebook-> Data exploration and working protoype (training the model with tf pipeline)
+#### src-> source code
+#### summary-> model summary while training and validation on test set 
