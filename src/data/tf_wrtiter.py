@@ -32,12 +32,12 @@ def int64_feature(value):
     return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
 
 
-def write_tf_records_file(x, y, tf_writer):
+def write_tf_records_file(x, y, tf_writer,data_type):
     '''This function writes a feature-label pair to a TF-Records file
     
     @param x: the feature
     @param y: the label
-    @param tf_writer: the TensorFlow Records writer instance that writes the files
+    @ tf_writer: the TensorFlow Records writer instance that writes the files
     '''
     
     # Convert numpy array to list, because tf.train.Feature accepts only lists
@@ -57,7 +57,7 @@ def write_tf_records_file(x, y, tf_writer):
 
 
 
-def run(tf_records_dir, data):
+def run(tf_records_dir, data, data_type=None):
     '''Main function for the writing process
     
     @param tf_records_dir: path where the files should be written into
@@ -88,7 +88,7 @@ def run(tf_records_dir, data):
     while tf_records_counter < n_tf_records_files:
 
         # Give each file an unique name(full-path)
-        tfrecords_file_name='%s_%i.tfrecord' % (tf_records_dir, tf_records_counter)
+        tfrecords_file_name='%s/%s_%i.tfrecord' % (tf_records_dir, data_type, tf_records_counter)
 
         #Initialize a writer for the files
         with tf.python_io.TFRecordWriter(tfrecords_file_name) as tf_writer:
@@ -107,7 +107,7 @@ def run(tf_records_dir, data):
                 y=labels[data_instance_counter]
                 
                 # Write feature and label to a TF-Records file
-                write_tf_records_file(x,y,tf_writer)
+                write_tf_records_file(x,y,tf_writer,data_type)
 
                 # Increase the counters
                 data_instance_counter+=1
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # Get the preprocessed data 
     train_data, test_data ,validation_set_1,validation_set_2=get_data()    
     #Write for each dataset TF-Records file
-    run(train_dir, train_data)
-    run(test_dir, test_data)
-    run(validation_dir_set_1, validation_set_1)
-    run(validation_dir_set_2, validation_set_2)
+    run(train_dir, train_data, data_type='training')
+    run(test_dir, test_data, data_type='test')
+    run(validation_dir_set_1, validation_set_1, data_type='validation_1')
+    run(validation_dir_set_2, validation_set_2, data_type='validation_2')
