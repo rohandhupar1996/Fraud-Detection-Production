@@ -1,8 +1,8 @@
-import tensorflow as tf
-
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 class BaseModel():
     def __init__(self):
-        self.weight_initializer = tf.random_normal_initializer(mean=0.0 , std=.25)
+        self.weight_initializer = tf.random_normal_initializer(mean=0.0,stddev=0.25, dtype=tf.float32)
         self.bias_initializer = tf.zeros_initializer()
 
     def weights_bias(self):
@@ -17,7 +17,7 @@ class BaseModel():
         with tf.name_scope("biases"):
             self.b1 = tf.get_variable(name="b1",shape=[20],dtype=tf.float32,initializer=self.bias_initializer)
             self.b2 = tf.get_variable(name="b2",shape=[8], dtype=tf.float32,initializer=self.bias_initializer)
-            self.b3 = tf.get_variable(name="b3",shape[20], dtype=tf.float32, initializer=self.bias_initializer)
+            self.b3 = tf.get_variable(name="b3",shape=[20], dtype=tf.float32, initializer=self.bias_initializer)
     
     def forward_pass(self, inputs):
         """ Forward propagation , compute the output from neural network.

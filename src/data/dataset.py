@@ -1,4 +1,5 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import os
 def get_training_data(filepaths):
     '''Prepares training dataset with the tf-data API for the input pipeline.
@@ -8,7 +9,7 @@ def get_training_data(filepaths):
     @return dataset: the training dataset
     '''
     
-    filenames=['/kaggle/working/tf_records_root_dir/tf_records_train/'+f for f in os.listdir(filepaths)]
+    filenames=['data/preprocessed/tf_records_dir/tf_records_train/'+f for f in os.listdir(filepaths)]
     
     dataset = tf.data.TFRecordDataset(filenames,num_parallel_reads=32)
     dataset = dataset.map(parse,num_parallel_calls=4)
@@ -29,7 +30,7 @@ def get_test_data(filepaths):
     @return dataset: the validation dataset
     '''
     
-    filenames=['/kaggle/working/tf_records_root_dir/tf_records_test/'+f for f in os.listdir(filepaths)]
+    filenames=['data/preprocessed/tf_records_dir/tf_records_test/'+f for f in os.listdir(filepaths)]
     
     
     dataset = tf.data.TFRecordDataset(filenames)
@@ -49,7 +50,7 @@ def get_validation_set_1(filepaths):
     @return dataset: the test dataset
     '''
     
-    filenames=['/kaggle/working/tf_records_root_dir/tf_records_validation_set_1/'+f for f in os.listdir(filepaths)]
+    filenames=['data/preprocessed/tf_records_dir/tf_records_validation_set_1/'+f for f in os.listdir(filepaths)]
 
     dataset = tf.data.TFRecordDataset(filenames)
     dataset = dataset.map(parse)
@@ -69,7 +70,7 @@ def get_validation_set_2(filepaths):
     @return dataset: the test dataset
     '''
     
-    filenames=['/kaggle/working/tf_records_root_dir/tf_records_validation_set_2/'+f for f in os.listdir(filepaths)]
+    filenames=['data/preprocessed/tf_records_dir/tf_records_validation_set_2/'+f for f in os.listdir(filepaths)]
 
     dataset = tf.data.TFRecordDataset(filenames)
     dataset = dataset.map(parse)

@@ -1,30 +1,28 @@
 from model.base_model import BaseModel
-import tensorflow as tf
-
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 class Anamoly_Detector(BaseModel):
-    def __init__(self,FLAGS):
+    def __init__(self):
         super().__init__()
-        self.FLAGS = FLAGS
         self.weights_bias()
     
-    def compute_loss(self,x_train,x_test):
+    def compute_loss(self,predictions,x_train):
         """ 
         Compute  mse on batch train and test
-        @params x_train : train set batch
-        @params x_test  : test set batch
+        @params predictions : set of prediction values from NN
+        @params x_train : set of train batch on which prediction is done
 
-        @returns mse_train & mse_test : the value of reconstruction error between train and test set 
+        @returns mse_train : the value of reconstruction error on train batches
         """
-        with tf.name_scope("loss function"):
-            mse_train=tf.reduce_mean(tf.square(x_train-self.forward_pass(x_train)))
-            mse_test=tf.reduce_mean(tf.square(x_test)-self.forward_pass(x_test))
+        with tf.name_scope("loss_function"):
+            mse_train=tf.reduce_mean(tf.square(predictions - x_train))
 
-        return mse_train, mse_test
+        return mse_train
 
     def train_network(self, mse_train):
         with tf.name_scope("optimizer_init"):
-            optimizer = tf.train.AdamOptimizer(learning_rate=self.FLAGS.learning_rate,name="adams_optimizer").minimize(mse_train)
-            
+            optimizer = tf.train.AdamOptimizer(learning_rate=0.001,name="adams_optimizer").minimize(mse_train)
+        return optimizer
         
 
 
