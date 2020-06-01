@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from data.dataset import get_training_data,get_test_data,get_validation_set_1,get_validation_set_2
 from model.training_model import Anamoly_Detector
+from performance import evaluate_model
 import os 
 import sys
 
@@ -27,6 +28,8 @@ train_path=os.path.join(tf_record_dir,"tf_records_train")
 test_path=os.path.join(tf_record_dir,"tf_records_test")
 validation_path_set_1=os.path.join(tf_record_dir,"tf_records_validation_set_1")
 validation_path_set_2=os.path.join(tf_record_dir,"tf_records_validation_set_2")
+checkpoints_path="checkpoints/model.ckpt"
+summary_path="summary/train/1"
 
 
 
@@ -104,7 +107,7 @@ def main(_):
 
         print('\nSaving Checkpoints...')
         # Save a checkpoint after the training
-        saver.save(sess, FLAGS.checkpoints_path)
+        saver.save(sess, checkpoints_path)
 
         print('\n\nResult of the evaluation on the test set: \n')
 
@@ -121,7 +124,7 @@ def main(_):
         
         error_df_test["predicted_class"]=[1 if x > 0.001 else 0 for x in error_df_test["reconstruction_error"]]
 
-        evaluate_model(error_df_test.true_class,error_df_test.predicted_class,error_df_test.reconstrution_error)
+        evaluate_model(error_df_test.true_class,error_df_test.predicted_class,error_df_test.reconstruction_error)
 
 
     
