@@ -69,6 +69,9 @@ def main(_):
         update_op=model.train_network(mse_train)
         mse_test=model.compute_loss(model.forward_pass(x_test),x_test)
 
+        predictions_val_1=model.forward_pass(x_val_1)
+        predictions_val_2=model.forward_pass(x_val_2)
+
         saver=tf.train.Saver(max_to_keep=5)
 
     with tf.Session(graph=training_graph) as sess:
@@ -103,7 +106,25 @@ def main(_):
         # Save a checkpoint after the training
         saver.save(sess, FLAGS.checkpoints_path)
 
+        print('\n\nResult of the evaluation on the test set: \n')
 
+        # Test the model after the training is complete with the test dataset
+        sess.run(iterator_val_1.initializer)
+        sess.run(iterator_val_2.initializer)
+
+        predictions_val_1,x_val_1,y_val_1=sess.run((predictions_val_1,x_val_1,y_val_1))
+        predictions_val_2,x_val_2,y_val_2=sess.run((predictions_val_2,x_val_2,y_val_2))
+
+        mse = np.mean(np.power(x_val_1 - predictions_val_1, 2), axis=1)
+        error_df_test = pd.DataFrame({'reconstruction_error': mse,
+                                'true_class': y_val_1.ravel()})
+        
+        error_df_test["predicted_class"]=[1 if x > 0.001 else 0 for x in error_df_test["reconstruction_error"]]
+
+        evaluate_model(error_df_test.true_class,error_df_test.predicted_class,error_df_test.reconstrution_error)
+
+
+    
 
 if __name__ == "__main__":
     tf.app.run()
