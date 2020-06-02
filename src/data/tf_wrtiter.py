@@ -126,9 +126,9 @@ if __name__ == "__main__":
     test_dir = os.path.join(tf_records_root_dir, 'tf_records_test')
     validation_dir_set_1 = os.path.join(tf_records_root_dir, 'tf_records_validation_set_1')
     validation_dir_set_2 = os.path.join(tf_records_root_dir, 'tf_records_validation_set_2')
-    
+    data_dir=os.path.abspath(os.path.join(os.path.dirname("__file__"),'..','/Deep Learning Production/Fraud-Detection-Production/data/raw/creditcard_dataset.csv'))
     # Get the preprocessed data 
-    train_data, test_data ,validation_set_1,validation_set_2=get_data()    
+    train_data, test_data ,validation_set_1,validation_set_2=get_data(data_type="train",data_dir=data_dir)    
     #Write for each dataset TF-Records file
     run(train_dir, train_data, data_type='training')
     run(test_dir, test_data, data_type='test')
