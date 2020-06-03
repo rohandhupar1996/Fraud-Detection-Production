@@ -37,4 +37,27 @@ class BaseModel():
 
         return output
 
+    def forward_pass_prod(self, inputs):
+        """ Forward propagation , compute the output from neural network.
+
+        @param inputs : (?,29) features from dataset as an input to Auto-encoder '?' defines number of batches
+        @returns output : mse produced during training over the batches 
+
+        """
+        f1 = lambda: tf.constant(1)
+        f2 = lambda: tf.constant(0)
+        with tf.name_scope("forward_pass"):
+            z1=tf.matmul(inputs,self.w1,name="layer_1")+self.b1
+            a1=tf.nn.sigmoid(z1)
+            z2=tf.matmul(a1, self.w2, name="layer_2")+self.b2
+            a2=tf.nn.sigmoid(z2)
+            z3=tf.matmul(a2,self.w3, name="layer_")+self.b3
+            a3=tf.nn.sigmoid(z3)
+            output=tf.matmul(a3,self.w4, name="final_layer")
+            mse=tf.reduce_mean(tf.square(output - inputs))
+            y=tf.constant(0.001)
+            results = tf.case([(tf.math.greater(mse, y), f1)], default=f2)
+
+        return results
+
             
