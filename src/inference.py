@@ -19,6 +19,7 @@ def main(_):
     # data=get_data(data_dir=data_dir,data_type="test")
     inference_graph=tf.Graph()
     with inference_graph.as_default():
+    # inference model 
         model=InferenceModel()
         input_data=tf.placeholder(tf.float32, shape=[1, 29])
         output=model.forward_pass_prod(input_data)
