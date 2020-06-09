@@ -14,3 +14,12 @@ structure for the files and code :
 #### notebook-> Data exploration and working protoype (training the model with tf pipeline)
 #### src-> source code
 #### summary-> model summary while training and validation on test set 
+
+how to run the api 
+1> old school way install tensorflow server model and port to 8500 and give model_name or model_path and install 
+   tensorflow serving api v1.13.1 
+   
+2nd way docker containerization approach though I deployed whole model in aws but cost way up high you can use this way which very easy 
+1> download docker image for tensorflow serving api of google which has all dependecies 
+2> create it's container 
+3> start the container once container is started you don't need to run sever again and again
