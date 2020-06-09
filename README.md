@@ -15,11 +15,16 @@ structure for the files and code :
 #### src-> source code
 #### summary-> model summary while training and validation on test set 
 
+#### dependcies : tensorflow v1.13.1
+
 how to run the api 
-1> old school way install tensorflow server model and port to 8500 and give model_name or model_path and install 
-   tensorflow serving api v1.13.1 
+#### 1> old school way 
+#### install tensorflow server model and port to 8500 for grpc request and give model_name and model_path and install 
+#### tensorflow serving api v1.13.1 with that 
+#### run -> python client.py
    
 2nd way docker containerization approach though I deployed whole model in aws but cost way up high you can use this way which very easy 
-1> download docker image for tensorflow serving api of google which has all dependecies 
-2> create it's container 
-3> start the container once container is started you don't need to run sever again and again
+#### 1> download docker image for tensorflow serving api of google which has all dependecies 
+#### 2> create it's container 
+#### 3> start the container once container is started you don't need to run sever again and again
+#### 4> run python client.py
