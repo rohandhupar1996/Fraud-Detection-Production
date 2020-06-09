@@ -1,9 +1,9 @@
 # Fraud-Detection-Production
 It is basically extension to my previous work where I used tensorflow pipelines (etl) to enhance the efficiency
-of cpu-gpu parallel processing
+of cpu-gpu parallel processing 
 
-This repository contains prod-code where we used autoencoder to detect frauds in transaction made on TF v1.13 framework
-with tensorflow serving api
+This repository contains prod-code where we used autoencoder to detect frauds in transaction made on Tensorflow v1.13.1 framework
+with tensorflow serving api v1.13.1
 
 structure for the files and code :
 
