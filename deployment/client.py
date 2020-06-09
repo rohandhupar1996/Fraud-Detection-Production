@@ -25,7 +25,7 @@ def parse_args():
     parser = ArgumentParser(description='Request a TensorFlow server for a prediction on the image')
     parser.add_argument('-s', '--server',
                         dest='server',
-                        default='0.0.0.0:8500',
+                        default='af332fe93f15a4e948333897feaace27-988552581.ap-south-1.elb.amazonaws.com:8501',
                         help='prediction service host:port')
     
     args = parser.parse_args()
@@ -46,7 +46,7 @@ def main():
 
     # Name of the data that should be send to the server
 
-    file='../data/raw/creditcard_dataset.csv'
+    file='../data/raw/creditcard_dataset_fraud.csv'
     data=get_data(data_type="test",data_dir=file)
 
     sample_df=data.sample(20)
@@ -66,6 +66,7 @@ def main():
         
         # Make a request (time-out after 20 seconds)
         request.inputs['inputs'].CopyFrom(make_tensor_proto(input_data, shape=[1,29]))
+	
         result = stub.Predict(request, 20.0)  # 60 secs timeout
         print(result)
 

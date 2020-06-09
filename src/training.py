@@ -1,5 +1,4 @@
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 import numpy as np
 import pandas as pd
 from data.dataset import get_training_data,get_test_data,get_validation_set_1,get_validation_set_2

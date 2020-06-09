@@ -1,5 +1,4 @@
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 import os
 def get_training_data(filepaths):
     '''Prepares training dataset with the tf-data API for the input pipeline.

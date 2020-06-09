@@ -1,5 +1,4 @@
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 import os 
 from model.inference_model import InferenceModel
 from sklearn.preprocessing import MinMaxScaler
@@ -40,7 +39,6 @@ def main(_):
         
             # Instance of the build for the SavedModel format
             builder = tf.saved_model.builder.SavedModelBuilder(export_path)
-        
         
             # Create tensor info for datainput and output of the neural network
             predict_tensor_inputs_info = tf.saved_model.utils.build_tensor_info(input_data)
