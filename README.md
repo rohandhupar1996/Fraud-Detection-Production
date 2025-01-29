@@ -1,33 +1,98 @@
-# Fraud-Detection-Production
-It is basically extension to my previous work where I used tensorflow pipelines (etl) to enhance the efficiency
-of cpu-gpu parallel processing 
+# Fraud Detection Production
 
-This repository contains prod-code where we used autoencoder to detect frauds in transaction made on Tensorflow v1.13.1 framework
-with tensorflow serving api v1.13.1
+An advanced fraud detection system using TensorFlow's autoencoder architecture with optimized CPU-GPU parallel processing pipelines. This production-ready system extends previous work by implementing efficient ETL pipelines and TensorFlow Serving for deployment.
 
-structure for the files and code :
+## Project Architecture
 
-#### checkpoints -> model checkpoints while training 
-#### data -> both processed and raw
-#### deployment -> tensorflow serving api 
-#### model-export -> saved model 
-#### notebook-> Data exploration and working protoype (training the model with tf pipeline)
-#### src-> source code
-#### summary-> model summary while training and validation on test set 
+```
+├── checkpoints/     # Model training checkpoints
+├── data/           
+│   ├── processed/   # Preprocessed datasets
+│   └── raw/        # Original data files
+├── deployment/      # TensorFlow Serving API configurations
+├── model-export/    # Exported SavedModel files
+├── notebooks/       # Data exploration and prototypes
+├── src/            # Source code
+└── summary/        # Training and validation summaries
+```
 
-#### dependcies : tensorflow v1.13.1
+## Technical Requirements
 
-how to run the api 
-#### 1> old school way 
-#### install tensorflow server model and port to 8500 for grpc request and give model_name and model_path and install 
-tensorflow_model_server --port=8500 --model_name=anamoly_detection --model_base_path=$HOME/Desktop/Fraud-Detection-Production-master/model-export/anamoly_detection/
-#### tensorflow serving api v1.13.1 with that 
-#### run -> python client.py
-   
-2nd way docker containerization approach though I deployed whole model in aws but cost way up high you can use this way which very easy 
-#### 1> download docker image for tensorflow serving api of google which has all dependecies 
-#### 2> create it's container 
-docker create -p 8500:8500 -e MODEL_NAME=anamoly_detection --mount type=bind , source=$HOME/Desktop/Fraud-Detection-Producton/model-export/anamoly_detection,target=/models/anamoly_detection --name=my_container1 tensorflow/serving
-#### 3> start the container once container is started you don't need to run sever again and again
+- TensorFlow v1.13.1
+- TensorFlow Serving API v1.13.1
+- Python 3.6+
+- Docker (for containerized deployment)
+
+## Deployment Options
+
+### Option 1: Standard Deployment
+
+1. Install TensorFlow Serving and configure port:
+```bash
+tensorflow_model_server --port=8500 \
+                       --model_name=anamoly_detection \
+                       --model_base_path=$HOME/Desktop/Fraud-Detection-Production-master/model-export/anamoly_detection/
+```
+
+2. Run the client:
+```bash
+python client.py
+```
+
+### Option 2: Docker Deployment (Recommended)
+
+1. Pull TensorFlow Serving image:
+```bash
+docker pull tensorflow/serving
+```
+
+2. Create container:
+```bash
+docker create -p 8500:8500 \
+    -e MODEL_NAME=anamoly_detection \
+    --mount type=bind,source=$HOME/Desktop/Fraud-Detection-Production/model-export/anamoly_detection,target=/models/anamoly_detection \
+    --name=my_container1 \
+    tensorflow/serving
+```
+
+3. Start container:
+```bash
 docker start my_container1
-#### 4> run python client.py
+```
+
+4. Run client:
+```bash
+python client.py
+```
+
+## Key Features
+
+- Optimized ETL pipelines for efficient data processing
+- CPU-GPU parallel processing for enhanced performance
+- Production-ready autoencoder model for fraud detection
+- TensorFlow Serving integration for scalable deployment
+- Docker containerization support
+- AWS deployment configuration (optional)
+
+## Performance Notes
+
+- Leverages TensorFlow's parallel processing capabilities
+- Optimized ETL reduces processing overhead
+- Docker containerization ensures consistent deployment
+- AWS deployment available for production scaling
+
+## Cloud Deployment
+
+While AWS deployment is supported, note that costs can be significant. Docker deployment is recommended for development and testing environments.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+[Add your license information here]
